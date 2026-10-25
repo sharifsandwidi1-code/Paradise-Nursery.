@@ -1,4 +1,4 @@
-# Paradise-Nursery.
+
 # Paradise Nursery - Online Plant Shopping Cart Application
 
 ## Description
