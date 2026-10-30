@@ -7,7 +7,6 @@ const CartItem = ({ onContinueShopping }) => {
   const cart = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
 
-  // Calcule le montant total de toutes les plantes dans le panier
   const calculateTotalAmount = () => {
     return cart.reduce((total, item) => {
       const itemCost = parseFloat(item.cost.replace('$', ''));
@@ -15,25 +14,21 @@ const CartItem = ({ onContinueShopping }) => {
     }, 0).toFixed(2);
   };
 
-  // Calcule le sous-total pour un article spécifique (prix unitaire x quantité)
   const calculateTotalCost = (item) => {
     const itemCost = parseFloat(item.cost.replace('$', ''));
     return (itemCost * item.quantity).toFixed(2);
   };
 
-  // Gère l'action "Continuer vos achats"
   const handleContinueShopping = (e) => {
     if (onContinueShopping) {
       onContinueShopping(e);
     }
   };
 
-  // Augmente la quantité d'une unité
   const handleIncrement = (item) => {
     dispatch(updateQuantity({ name: item.name, quantity: item.quantity + 1 }));
   };
 
-  // Diminue la quantité ou retire l'article s'il atteint 0
   const handleDecrement = (item) => {
     if (item.quantity > 1) {
       dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
@@ -42,12 +37,10 @@ const CartItem = ({ onContinueShopping }) => {
     }
   };
 
-  // Supprime directement l'article du panier
   const handleRemove = (item) => {
     dispatch(removeItem(item.name));
   };
 
-  // Alerte pour la fonctionnalité de paiement "À venir"
   const handleCheckoutShopping = () => {
     alert('Fonctionnalité à venir : Le processus de paiement sera bientôt disponible !');
   };
@@ -59,7 +52,7 @@ const CartItem = ({ onContinueShopping }) => {
       {cart.length === 0 ? (
         <div className="empty-cart-message">
           <p>Votre panier est actuellement vide.</p>
-          <button className="continue-btn" onClick={(e) => handleContinueShopping(e)}>
+          <button className="get-started-button" onClick={(e) => handleContinueShopping(e)}>
             Continuer vos achats
           </button>
         </div>
@@ -99,7 +92,7 @@ const CartItem = ({ onContinueShopping }) => {
           </div>
 
           <div className="cart-navigation-actions">
-            <button className="continue-btn" onClick={(e) => handleContinueShopping(e)}>
+            <button className="get-started-button" onClick={(e) => handleContinueShopping(e)}>
               Continuer vos achats
             </button>
             <button className="checkout-btn" onClick={handleCheckoutShopping}>
