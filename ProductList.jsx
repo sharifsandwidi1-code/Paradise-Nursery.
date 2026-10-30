@@ -9,11 +9,9 @@ function ProductList() {
   const [addedToCart, setAddedToCart] = useState({});
   const dispatch = useDispatch();
 
-  // Calcul du nombre total d'articles uniques ou cumulés dans le panier
   const cartItems = useSelector((state) => state.cart.items);
   const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-  // Catalogue de plantes : 3 catégories distinctes, 6 plantes chacune
   const plantsArray = [
     {
       category: "Plantes Purificatrices d'Air",
@@ -169,7 +167,6 @@ function ProductList() {
 
   return (
     <div>
-      {/* Barre de navigation commune */}
       <nav className="navbar">
         <div className="nav-brand" onClick={handleHomeClick} style={{ cursor: 'pointer' }}>
           <div className="nav-logo-circle">🌿</div>
@@ -188,15 +185,13 @@ function ProductList() {
         </div>
       </nav>
 
-      {/* Affichage conditionnel Catalogue / Panier */}
       {!showCart ? (
         <div className="product-grid-container">
           {plantsArray.map((categorySection, catIdx) => (
-            <div key={catIdx} className="category-section">
+            <div key={catIdx} className="product-list">
               <h2 className="category-title">{categorySection.category}</h2>
               <div className="plant-grid">
                 {categorySection.plants.map((plant, pIdx) => {
-                  const isItemInCart = addedToCart[plant.name] || cartItems.some(item => item.name === plant.name);
                   return (
                     <div key={pIdx} className="plant-card">
                       <img src={plant.image} alt={plant.name} className="plant-image" />
@@ -204,11 +199,11 @@ function ProductList() {
                       <p className="plant-desc">{plant.description}</p>
                       <p className="plant-cost">{plant.cost}</p>
                       <button
-                        className={`add-to-cart-btn ${isItemInCart ? 'added' : ''}`}
+                        className={`add-to-cart-btn ${addedToCart[plant.name] ? 'added' : ''}`}
                         onClick={() => handleAddToCart(plant)}
-                        disabled={isItemInCart}
+                        disabled={addedToCart[plant.name]}
                       >
-                        {isItemInCart ? '✓ Ajouté au panier' : 'Ajouter au panier'}
+                        {addedToCart[plant.name] ? '✓ Ajouté au panier' : 'Ajouter au panier'}
                       </button>
                     </div>
                   );
